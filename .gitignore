@@ -218,3 +218,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# Node / frontend
+node_modules/
+frontend/dist/
+
+# Django
+*.sqlite3
+media/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
