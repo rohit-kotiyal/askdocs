@@ -15,7 +15,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ("list", "retreive"):
             return [IsAuthenticated()]
-        return [IsOrgAdmin]
+        return [IsOrgAdmin()]
 
     def perform_create(self, serializer):
         serializer.save(
