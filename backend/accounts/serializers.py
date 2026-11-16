@@ -27,3 +27,17 @@ class RegisterSerializer(serializers.Serializer):
             organization=org,
             role=User.Role.ADMIN,
         )
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = ("id", "name")
+
+class MeSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ("id", "username", "email", "role", "organization")
+        
