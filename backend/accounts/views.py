@@ -1,7 +1,8 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .serializers import RegisterSerializer, MeSerializer
+from .serializers import RegisterSerializer, MeSerializer, InviteSerializer
 from rest_framework.views import APIView
+from .permissions import IsOrgAdmin
 
 
 
@@ -24,6 +25,20 @@ class RegisterView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
+
+class InviteView(generics.CreateAPIView):
+    serializer_class = InviteSerializer
+    permission_classes = [IsOrgAdmin]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        return Response(
+            {"id": user.id, "username": user.username, "role": user.role},
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class MeView(APIView):

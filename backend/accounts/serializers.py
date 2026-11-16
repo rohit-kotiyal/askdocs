@@ -40,4 +40,25 @@ class MeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "email", "role", "organization")
-        
+
+
+
+class InviteSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True, validators=[validate_password])
+
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("Username already taken.")
+        return value
+
+
+    def create(self, validated_data):
+        org = self.context["request"].user.organization
+        return User.objects.create_user(
+            organization=org,
+            role=User.Role.MEMBER,
+            **self.validated_data
+        )
