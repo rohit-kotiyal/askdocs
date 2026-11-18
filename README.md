@@ -20,7 +20,7 @@ AskDocs is a multi-tenant AI knowledge assistant. Organizations upload their doc
 
 - [x] Stage 1: Auth
 - [x] Stage 2: Multi-tenancy and RBAC
-- [ ] Stage 3: Document ingestion
+- [x] Stage 3: Document ingestion
 - [ ] Stage 4: Embeddings and retrieval
 - [ ] Stage 5: RAG answers
 - [ ] Stage 6: UI
