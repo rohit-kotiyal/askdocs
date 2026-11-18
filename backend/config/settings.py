@@ -159,3 +159,6 @@ SIMPLE_JWT = {
 
 CELERY_BROKER_URL = os.environ["REDIS_URL"]
 CELERY_RESULT_BACKEND = os.environ["REDIS_URL"]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
