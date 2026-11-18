@@ -3,7 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import IsOrgAdmin
 from .models import Document
 from .serializers import DocumentSerializer
-
+from django.db import transaction
+from .tasks import process_document
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -18,7 +19,9 @@ class DocumentViewSet(viewsets.ModelViewSet):
         return [IsOrgAdmin()]
 
     def perform_create(self, serializer):
-        serializer.save(
+        document = serializer.save(
             organization=self.request.user.organization,
             uploaded_by=self.request.user,
         )
+
+        transaction.on_commit(lambda: process_document.delay(document.id))

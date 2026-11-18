@@ -22,3 +22,13 @@ class Document(models.Model):
     def __str__(self):
         return self.title
     
+
+
+class Chunk(models.Model):
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name="chunks")
+    organization = models.ForeignKey("accounts.Organization", on_delete=models.CASCADE)
+    index = models.PositiveIntegerField()
+    content = models.TextField()
+
+    class Meta:
+        ordering = ["document_id", "index"]

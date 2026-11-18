@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Chunk, Document
 
-# Register your models here.
+admin.site.register(Chunk)
+admin.site.register(Document)
