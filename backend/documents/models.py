@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from pgvector.django import VectorField
 
 
 
@@ -29,6 +30,7 @@ class Chunk(models.Model):
     organization = models.ForeignKey("accounts.Organization", on_delete=models.CASCADE)
     index = models.PositiveIntegerField()
     content = models.TextField()
+    embedding = VectorField(dimensions=384, null=True, blank=True)
 
     class Meta:
         ordering = ["document_id", "index"]
